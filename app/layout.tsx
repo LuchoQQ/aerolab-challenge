@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ['latin'] })
-
- 
+import Header from "@/components/sections/Header";
+import { ReactQueryClientProvider } from "@/components/ReactQueryClientProvider";
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -18,7 +15,12 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${inter.className} `}>{children}</body>
+            <ReactQueryClientProvider>
+                <body className="flex flex-col max-w-screen-2xl mx-auto bg-gray-100 min-h-screen">
+                    <Header />
+                    {children}
+                </body>
+            </ReactQueryClientProvider>
         </html>
     );
 }

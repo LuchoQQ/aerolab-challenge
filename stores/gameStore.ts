@@ -1,16 +1,13 @@
+import Game from '@/interfaces/Game';
 import { create } from 'zustand'
 
-interface Game {
-    id: number;
-    name: string;
-    cover: { url: string };
-}
 
 interface GameStore {
     collectedGames: Game[];
     addGame: (game: Game) => void;
     removeGame: (gameId: number) => void;
     initializeStore: () => void;
+    cleanStore: () => void;
 }
 
 const useGameStore = create<GameStore>((set) => ({
@@ -40,6 +37,12 @@ const useGameStore = create<GameStore>((set) => ({
                 set({ collectedGames: JSON.parse(storedGames) });
             }
         }
+    },
+    cleanStore: () => {
+        set((state) => {
+            const games: Game[] = [];
+            return {collectedGames: games}
+        })
     }
 }));
 
