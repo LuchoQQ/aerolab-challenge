@@ -1,15 +1,15 @@
 import useGameStore from "@/stores/gameStore";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import ButtonSelector from "../ButtonSelector";
 import Game from "@/interfaces/Game";
 
 type Props = {
-    setFilteredGames: (games: Game[]) => void,
-    isFixed: boolean
-}
+    setFilteredGames: (games: Game[]) => void;
+};
 
-const HomeButtons: React.FC<Props> = ({setFilteredGames, isFixed}) => {
-    const { cleanStore, collectedGames, initializeStore } = useGameStore();
+const HomeButtons: React.FC<Props> = ({ setFilteredGames }) => {
+    const { collectedGames, initializeStore } = useGameStore();
+    const [isFixed, setIsFixed] = useState(false);
 
     const [activeButton, setActiveButton] = useState<string>("lastAdded");
 
@@ -17,8 +17,34 @@ const HomeButtons: React.FC<Props> = ({setFilteredGames, isFixed}) => {
         initializeStore();
     }, [initializeStore]);
 
+    useLayoutEffect(() => {
+        const handleScroll = () => {
+            if (buttonsRef.current && placeholderRef.current) {
+                const rect = placeholderRef.current.getBoundingClientRect();
+                const shouldBeFixed = rect.top <= 0;
+                setIsFixed(shouldBeFixed);
+
+                if (shouldBeFixed) {
+                    buttonsRef.current.style.position = "fixed";
+                    buttonsRef.current.style.top = "0";
+                    buttonsRef.current.style.left = "0";
+                    buttonsRef.current.style.right = "0";
+                    buttonsRef.current.style.zIndex = "10";
+                } else {
+                    buttonsRef.current.style.position = "static";
+                    buttonsRef.current.style.boxShadow = "none";
+                }
+            }
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        handleScroll();
+
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
     useEffect(() => {
-        let sortedGames = [...collectedGames];
+        const sortedGames = [...collectedGames];
 
         if (activeButton === "newest") {
             sortedGames.sort(
@@ -36,21 +62,20 @@ const HomeButtons: React.FC<Props> = ({setFilteredGames, isFixed}) => {
 
     const buttonsRef = useRef<HTMLDivElement>(null);
     const placeholderRef = useRef<HTMLDivElement>(null);
-    
-    
+
     return (
         <>
-            <h2 className="text-xl font-bold text-primary mb-4 px-2">
+            <h2 className="text-xl font-bold text-primary mb-4 px-2 md: text-center">
                 Saved Games
             </h2>
-            <h1 onClick={() => cleanStore()}>Drop collected games</h1>
+            {/*  <h1 onClick={() => cleanStore()}>Drop collected games</h1> */}
             <div
                 ref={placeholderRef}
                 style={{ height: isFixed ? "56px" : "auto" }}
             >
                 <div
                     ref={buttonsRef}
-                    className={`flex mb-8 gap-3 transition-all duration-300 ease-in-out ${
+                    className={`flex md:justify-center mb-8 gap-3 transition-all duration-300 ease-in-out ${
                         isFixed
                             ? "fixed top-0 left-0 right-0 justify-center z-10 mt-10"
                             : ""

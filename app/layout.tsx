@@ -16,7 +16,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <ReactQueryClientProvider>
-                <body className="flex flex-col max-w-screen-2xl mx-auto bg-gray-100 min-h-screen">
+                <body className="flex flex-col mx-auto bg-gray-100 min-h-screen">
                     <Header />
                     {children}
                 </body>

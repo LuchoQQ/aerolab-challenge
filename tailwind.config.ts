@@ -16,9 +16,10 @@ const config: Config = {
 			'hero': "url('/keys.png')"
 		},
   		colors: {
-			primary: '#6727A6',
+			primary: '#3C1661',
 			secondary: '#FF86D9',
 			tertiary: '#C698B8',
+			quartery: '#3C1661',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

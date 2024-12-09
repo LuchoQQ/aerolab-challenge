@@ -1,9 +1,15 @@
+import Game from "@/interfaces/Game";
 import { Trash } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 
-const Card = ({ game, removeGame }) => {
-    let url = game?.cover?.url?.replace("thumb", "cover_big");
+type Props = {
+    game: Game,
+    removeGame: (id: number) => void;
+}
+
+const Card: React.FC<Props> = ({ game, removeGame }) => {
+    const url = game?.cover?.url?.replace("thumb", "cover_big");
 
     return (
         <div className="relative">

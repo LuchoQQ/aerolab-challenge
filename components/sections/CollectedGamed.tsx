@@ -27,27 +27,29 @@ const CollectedGamed: React.FC<Props> = ({ filteredGames }) => {
     };
 
     return (
-        <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={cardsContainerVariants}
-            className="sm:px-4 md:px-6"
-        >
-            {filteredGames.length > 0 ? (
-                <ul className="grid grid-cols-3 gap-1 w-full">
-                    {filteredGames.map((game: Game) => (
-                        <li
-                            key={game.id}
-                            className="flex flex-col items-center w-full"
-                        >
-                            <Card game={game} removeGame={removeGame} />
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <NoItemsCollected />
-            )}
-        </motion.div>
+        <div className="flex justify-center">
+            <motion.div
+                initial="hidden"
+                animate="visible"
+                variants={cardsContainerVariants}
+                className="sm:px-4 md:px-6 max-w-screen-md  "
+            >
+                {filteredGames.length > 0 ? (
+                    <ul className="grid grid-cols-3 gap-3 w-full md:grid-cols-4 md:gap-10">
+                        {filteredGames.map((game: Game) => (
+                            <li
+                                key={game.id}
+                                className="flex flex-col items-center w-full"
+                            >
+                                <Card game={game} removeGame={removeGame} />
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <NoItemsCollected />
+                )}
+            </motion.div>
+        </div>
     );
 };
 

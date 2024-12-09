@@ -2,10 +2,10 @@ import Game from "@/interfaces/Game";
 import React from "react";
 
 type Props = {
-    data: Game
-}
+    data: Game;
+};
 
-const GameInfo: React.FC<Props> = ({data}) => {
+const GameInfo: React.FC<Props> = ({ data }) => {
     return (
         <>
             <div className="flex flex-col gap-2">
@@ -18,9 +18,7 @@ const GameInfo: React.FC<Props> = ({data}) => {
                 <h3 className="font-bold text-xl">Platforms</h3>
                 <h4 className="text-sm font-medium opacity-70">
                     {" "}
-                    {data?.platforms
-                        ?.map((platform) => platform.name)
-                        .join(", ")}
+                    {data?.platforms?.join(", ")}
                 </h4>
             </div>
         </>

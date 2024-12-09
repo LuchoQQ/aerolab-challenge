@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 type Props = {
     isGameCollected: boolean,
     handleAddGame: (game: Game) => void;
-    data: Game | undefined;
+    data: Game;
 }
 
 const CollectButton: React.FC<Props> = ({ isGameCollected, handleAddGame, data }) => {
@@ -32,13 +32,13 @@ const CollectButton: React.FC<Props> = ({ isGameCollected, handleAddGame, data }
         <>
             {isGameCollected ? (
                 <>
-                    <div className="text-center bg-white mt-6 p-3 rounded-full text-primary font-bold border-2 border-primary">
+                    <div className="text-center bg-white mt-6 p-3 rounded-full text-quartery font-bold border-2 border-primary md:max-w-40 cursor-pointer">
                         Game collected
                     </div>
                 </>
             ) : (
                 <div
-                    className="text-center bg-primary mt-6 p-3 rounded-full text-white font-bold"
+                    className="text-center bg-primary mt-6 p-3 rounded-full text-white font-bold md:max-w-40 cursor-pointer"
                     onClick={() => {
                         handleAddGame(data);
                         notify();

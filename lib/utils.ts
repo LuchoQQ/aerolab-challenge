@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 
 
 
-export function findCompany(involved_companies: InvolvedCompanies[], type = "developer") {
+export function findCompany(involved_companies: InvolvedCompanies[], type = "developer"): { name: string; id: number } | null {
     let company = null;
     if (involved_companies) {
         involved_companies.forEach((involved_company: InvolvedCompanies) => {
@@ -23,9 +23,9 @@ export function findCompany(involved_companies: InvolvedCompanies[], type = "dev
                     name: involved_company.company.name,
                 }
             }
-        })
+        });
     }
-    return company;
+    return company; // company can be null
 }
 
 

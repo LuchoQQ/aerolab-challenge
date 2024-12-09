@@ -4,7 +4,7 @@ import axios from "axios";
 import Image from "next/image";
 import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
-
+import default_games from "../lib/default_games.js";
 interface SearchItem {
     id: number;
     name: string;
@@ -12,56 +12,16 @@ interface SearchItem {
 }
 
 // Default popular games to show when the input is opened
-const DEFAULT_GAMES = [
-    {
-        id: 1,
-        name: "The Legend of Zelda: Breath of the Wild",
-        cover: {
-            url: "//images.igdb.com/igdb/image/upload/t_cover_big/co1tmu.jpg",
-        },
-    },
-    {
-        id: 2,
-        name: "Red Dead Redemption 2",
-        cover: {
-            url: "//images.igdb.com/igdb/image/upload/t_cover_big/co1ir3.jpg",
-        },
-    },
-    {
-        id: 3,
-        name: "Elden Ring",
-        cover: {
-            url: "//images.igdb.com/igdb/image/upload/t_cover_big/co4jni.jpg",
-        },
-    },
-    {
-        id: 4,
-        name: "God of War",
-        cover: {
-            url: "//images.igdb.com/igdb/image/upload/t_cover_big/co1ypq.jpg",
-        },
-    },
-    {
-        id: 5,
-        name: "Cyberpunk 2077",
-        cover: {
-            url: "//images.igdb.com/igdb/image/upload/t_cover_big/co2f5h.jpg",
-        },
-    },
-];
+const DEFAULT_GAMES = default_games;
 
 export function GameSearchBar() {
     const [searchTerm, setSearchTerm] = useState("");
     const [results, setResults] = useState<SearchItem[]>(DEFAULT_GAMES);
-    const [selectedItem, setSelectedItem] = useState<SearchItem | null>(null);
     const [isLoading, setIsLoading] = useState(false);
 
     const inputRef = useRef<HTMLInputElement>(null);
 
     const router = useRouter();
-
-
-    
 
     useEffect(() => {
         // If no search term, use default games
@@ -88,20 +48,17 @@ export function GameSearchBar() {
         }
     };
 
-
     useEffect(() => {
         const timerId = setTimeout(fetchResults, 500);
         return () => clearTimeout(timerId);
     }, [searchTerm]);
 
-
     return (
         <div className="w-72">
-            <Combobox value={selectedItem}>
+            <Combobox>
                 <div className="relative">
                     <div className="flex items-center relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left sm:text-sm">
                         <Search className="text-black" />
-                        {/* Added Combobox.Button to manually open the dropdown */}
                         <Combobox.Button className="absolute inset-0 w-full h-full" />
                         <Combobox.Input
                             ref={inputRef}
@@ -112,7 +69,7 @@ export function GameSearchBar() {
                             onChange={(event) => {
                                 setSearchTerm(event.target.value);
                             }}
-                            placeholder="Buscar..."
+                            placeholder="Search games..."
                         />
                     </div>
                     <Transition
@@ -143,7 +100,7 @@ export function GameSearchBar() {
                                     <Combobox.Option
                                         key={game.id}
                                         className={({ active }) =>
-                                            `relative cursor-default select-none py-2 pl-5 pr-4 ${
+                                            `relative cursor-default select-none py-2 pl-2 pr-4 ${
                                                 active
                                                     ? "bg-teal-600 text-white"
                                                     : "text-gray-900"
@@ -154,15 +111,15 @@ export function GameSearchBar() {
                                             router.push(`/details/${game.id}`)
                                         }
                                     >
-                                        {({ selected, active }) => (
+                                        {({}) => (
                                             <div className="flex items-center">
                                                 {game.cover &&
                                                 game.cover.url ? (
                                                     <Image
                                                         src={`https:${game.cover.url}`}
                                                         alt={game.name}
-                                                        width={50}
-                                                        height={50}
+                                                        width={30}
+                                                        height={30}
                                                         className="mr-2"
                                                     />
                                                 ) : null}

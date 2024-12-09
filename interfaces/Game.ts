@@ -7,7 +7,7 @@ export default interface Game {
     summary: string;
     platforms: string[];
     rating: number;
-    involved_companies: string[];
+    involved_companies: InvolvedCompanies[];
     screenshots: { url: string }[];
     genres: { name: string }[];
     similar_games: number[];

@@ -5,11 +5,7 @@ import {
     EmblaOptionsType,
 } from "embla-carousel";
 import useEmblaCarousel from "embla-carousel-react";
-import { DotButton, useDotButton } from "./EmblaCarouselDotButtons";
-
-// Importa los archivos CSS como módulos
 import styles from "../carousel/embla.module.css";
-import sandboxStyles from "../carousel/sandbox.module.css";
 import {
     NextButton,
     PrevButton,
@@ -29,9 +25,6 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
     const [emblaRef, emblaApi] = useEmblaCarousel(options);
     const tweenFactor = useRef(0);
     const tweenNodes = useRef<HTMLElement[]>([]);
-
-    const { selectedIndex, scrollSnaps, onDotButtonClick } =
-        useDotButton(emblaApi);
 
     const {
         prevBtnDisabled,
@@ -61,7 +54,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
             const isScrollEvent = eventName === "scroll";
 
             emblaApi.scrollSnapList().forEach((scrollSnap, snapIndex) => {
-                let diffToTarget = scrollSnap - scrollProgress;
+                const diffToTarget = scrollSnap - scrollProgress;
                 const slidesInSnap = engine.slideRegistry[snapIndex];
 
                 slidesInSnap.forEach((slideIndex) => {
@@ -103,7 +96,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
             <div className={styles.embla__viewport} ref={emblaRef}>
                 <div className={styles.embla__container}>
                     {slides?.map((slide, index) => {
-                        let url = slide.replace("thumb", "cover_big");
+                        const url = slide.replace("thumb", "screenshot_big");
                         return (
                             <div className={styles.embla__slide} key={index}>
                                 <div className={styles.embla__parallax}>

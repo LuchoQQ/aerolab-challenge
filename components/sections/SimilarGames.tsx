@@ -11,7 +11,7 @@ const SimilarGames: React.FC<Props> = ({ similarGames }) => {
     return (
         <div>
             <h3 className="font-bold text-xl text-primary">Similar Games</h3>
-            <div className="grid grid-cols-3 gap-2 sm:gap-4 mt-4 w-full">
+            <div className="grid grid-cols-3 gap-2 sm:gap-4 mt-4 w-full md:grid-cols-4">
                 {similarGames.map((game) => (
                     <Link
                         key={game.id}
