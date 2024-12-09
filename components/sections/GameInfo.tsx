@@ -1,4 +1,4 @@
-import Game from "@/interfaces/Game";
+import Game, { Platform } from "@/interfaces/Game";
 import React from "react";
 
 type Props = {
@@ -17,9 +17,9 @@ const GameInfo: React.FC<Props> = ({ data }) => {
             <div className="flex flex-col gap-2">
                 <h3 className="font-bold text-xl">Platforms</h3>
                 <h4 className="text-sm font-medium opacity-70">
-                    {" "}
-                    {data?.platforms?.join(", ")}
-                </h4>
+                    {data?.platforms
+                        ?.map((platform: Platform) => platform.name)
+                        .join(", ")}                </h4>
             </div>
         </>
     );

@@ -5,7 +5,7 @@ export default interface Game {
     first_release_date: number;
     added: number;
     summary: string;
-    platforms: string[];
+    platforms: Platform[];
     rating: number;
     involved_companies: InvolvedCompanies[];
     screenshots: { url: string }[];
