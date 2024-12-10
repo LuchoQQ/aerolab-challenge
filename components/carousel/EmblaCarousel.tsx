@@ -19,7 +19,7 @@ type PropType = {
 };
 
 const EmblaCarousel: React.FC<PropType> = (props) => {
-    const [selectedImage, setSelectedImage] = useState("");
+    const [selectedImageIndex, setSelectedImageIndex] = useState(0);
     const [open, setOpen] = useState(false);
 
     const { slides, options } = props;
@@ -62,7 +62,6 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                         diffToTarget * (-1 * tweenFactor.current) * 100;
                     const tweenNode = tweenNodes.current[slideIndex];
 
-                    // Asegúrate de que tweenNode no sea null antes de intentar modificarlo
                     if (tweenNode) {
                         tweenNode.style.transform = `translateX(${translate}%)`;
                     }
@@ -87,17 +86,36 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
             .on("slideFocus", tweenParallax);
     }, [emblaApi, tweenParallax]);
 
-    const url = selectedImage.replace(
+    const openModal = (index: number) => {
+        setSelectedImageIndex(index);
+        setOpen(true);
+    };
+
+    const navigateModal = (direction: 'prev' | 'next') => {
+        const newIndex = direction === 'next' 
+            ? (selectedImageIndex + 1) % slides.length
+            : (selectedImageIndex - 1 + slides.length) % slides.length;
+        setSelectedImageIndex(newIndex);
+    };
+
+    const url = slides[selectedImageIndex].replace(
         "thumb",
         "screenshot_huge"
     );
 
     return (
         <>
-            <DialogModal open={open} setOpen={setOpen} url={url}/>
+            <DialogModal 
+                open={open} 
+                setOpen={setOpen} 
+                url={url}
+                onPrev={() => navigateModal('prev')}
+                onNext={() => navigateModal('next')}
+                hasPrev={slides.length > 1}
+                hasNext={slides.length > 1}
+            />
 
             <div className={styles.embla}>
-                {/* Usa el estilo del carrusel */}
                 <div className={styles.embla__viewport} ref={emblaRef}>
                     <div className={styles.embla__container}>
                         {slides?.map((slide, index) => {
@@ -109,10 +127,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                                 <div
                                     className={styles.embla__slide}
                                     key={index}
-                                    onClick={() => {
-                                        setSelectedImage(slide);
-                                        setOpen(true);
-                                    }}
+                                    onClick={() => openModal(index)}
                                 >
                                     <div className={styles.embla__parallax}>
                                         <div

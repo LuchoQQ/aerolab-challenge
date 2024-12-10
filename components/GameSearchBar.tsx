@@ -15,7 +15,7 @@ interface SearchItem {
     cover: { url: string };
 }
 
-export function GameSearchBar() {
+export default function GameSearchBar() {
     const [searchTerm, setSearchTerm] = useState("");
     const inputRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
