@@ -20,22 +20,27 @@ type Props = {
 };
 
 const GameDetailsContent: React.FC<Props> = ({ params }) => {
+    // data store
     const { collectedGames, initializeStore, addGame } = useGameStore();
+
+    // react query
     const { data, isLoading: isLoadingGame } = useGameDetails(params.slug);
     const { data: similarGames, isLoading: isLoadingSimilarGames } = useSimilarGames(params.slug);
+   
+    // inicializar data con el localstorage
+    useEffect(() => {
+        initializeStore();
+    }, [initializeStore]);
 
+    // flags
     const isLoading = isLoadingGame || isLoadingSimilarGames;
 
+    // handlers
     const getCarouselImages = () =>
         data?.screenshots?.map((image) => `https:${image.url}`) || [];
 
     const getGenreNames = () =>
         data?.genres?.map((genre: Genre) => genre.name).join(" & ") || "N/A";
-
-
-    useEffect(() => {
-        initializeStore();
-    }, [initializeStore]);
 
     if (isLoading) {
         return (

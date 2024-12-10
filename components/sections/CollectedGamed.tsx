@@ -12,6 +12,7 @@ type Props = {
 const CollectedGamed: React.FC<Props> = ({ filteredGames }) => {
     const { removeGame } = useGameStore();
 
+    // animaciones del contenedor de la coleccion
     const cardsContainerVariants = {
         hidden: { opacity: 0, y: 50 },
         visible: {

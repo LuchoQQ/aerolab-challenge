@@ -5,7 +5,7 @@ export default async function Page({
 }: {
     params: Promise<{ slug: number }>;
 }) {
-    // Resolve the promise
+    // resolver los params
     const resolvedParams = await params;
 
     return <DetailsPage params={resolvedParams} />;

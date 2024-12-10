@@ -73,7 +73,6 @@ const HomeButtons: React.FC<Props> = ({ setFilteredGames }) => {
             <h2 className="text-xl font-bold text-primary mb-4 px-2 md: text-center">
                 Saved Games
             </h2>
-            {/*  <h1 onClick={() => cleanStore()}>Drop collected games</h1> */}
             <div
                 ref={placeholderRef}
                 style={{ height: isFixed ? "56px" : "auto" }}

@@ -19,6 +19,8 @@ const DetailsHeader: React.FC<Props> = ({
     addGame,
     id,
 }) => {
+    
+    // handlers
     const isGameCollected = collectedGames.some(
         (game: Game) => game.id === data.id
     );
@@ -40,7 +42,7 @@ const DetailsHeader: React.FC<Props> = ({
                             src={`https:${url}`}
                             alt="Portada juego"
                             fill
-                sizes="100%"
+                            sizes="100%"
                             quality={100}
                             className="rounded-lg object-cover"
                         />
