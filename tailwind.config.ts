@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+const { fontFamily } = require('tailwindcss/defaultTheme')
 
 const config: Config = {
     darkMode: ["class"],
@@ -10,10 +11,10 @@ const config: Config = {
   theme: {
   	extend: {
 		fontFamily: {
-			primary: ["var(--font-inter)"], // Agrega Roboto como una opción de fuente
+			sans: ['var(--font-inter)', ...fontFamily.sans],
 		},
 		backgroundImage: {
-			'hero': "url('/keys.png')"
+			'hero': "url('/keys.webp')"
 		},
   		colors: {
 			primary: '#3C1661',

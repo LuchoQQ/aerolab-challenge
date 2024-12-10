@@ -6,15 +6,15 @@ const NoItemsCollected = () => {
         <div className="flex justify-center mt-auto mt-2">
             <div>
                 <Image
-                    src="/empty.png"
+                    src="/empty.webp"
                     alt="no items"
                     height={300}
                     width={300}
                 />
-                <h3 className="font-primary text-center font-bold text-xl">
+                <h3 className="text-center font-bold text-xl">
                     Nothing collected yet
                 </h3>
-                <h4 className="font-primary text-center text-sm">
+                <h4 className="text-center text-sm">
                     Here you will see your collected games
                 </h4>
             </div>

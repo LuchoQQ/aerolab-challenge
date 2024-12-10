@@ -12,13 +12,18 @@ export const gameService = {
         }
     },
 
-    async fetchSimilarGames(similarGameIds: number[]): Promise<Game[]> {
-        // Limit to first 6 similar games
-        const limitedSimilarGameIds = similarGameIds.slice(0, 6);
-
+    async fetchSimilarGames(slug: string): Promise<Game[]> {
         try {
+            // First, fetch the game details to get similar game IDs
+            const gameData = await this.fetchGameDetails(slug);
+            const similarGameIds = gameData.similar_games?.slice(0, 6) || [];
+
+            // If no similar games, return empty array
+            if (similarGameIds.length === 0) return [];
+
+            // Fetch details for similar games
             const similarGamesDetails = await Promise.all(
-                limitedSimilarGameIds.map(async (gameId) => {
+                similarGameIds.map(async (gameId) => {
                     try {
                         const gameRes = await axios.post(`/api/details/similar/${gameId}`);
                         return gameRes.data[0];
@@ -33,6 +38,21 @@ export const gameService = {
             return similarGamesDetails.filter((game) => game !== null);
         } catch (error) {
             console.error("Error fetching similar games:", error);
+            return [];
+        }
+    },
+
+
+    async searchGames(searchTerm: string): Promise<Game[]> {
+        try {
+            if (searchTerm.length <= 2) {
+                return [];
+            }
+
+            const res = await axios.post<Game[]>("/api/games", { name: searchTerm });
+            return res.data;
+        } catch (error) {
+            console.error("Error searching games:", error);
             return [];
         }
     }

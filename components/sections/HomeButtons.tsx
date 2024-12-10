@@ -13,10 +13,13 @@ const HomeButtons: React.FC<Props> = ({ setFilteredGames }) => {
 
     const [activeButton, setActiveButton] = useState<string>("lastAdded");
 
+    // inicializar estados globales
     useEffect(() => {
         initializeStore();
     }, [initializeStore]);
 
+
+    // manejar el scroll los botones
     useLayoutEffect(() => {
         const handleScroll = () => {
             if (buttonsRef.current && placeholderRef.current) {
@@ -43,6 +46,8 @@ const HomeButtons: React.FC<Props> = ({ setFilteredGames }) => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+
+    // sorting accionada por el cambio en los botones
     useEffect(() => {
         const sortedGames = [...collectedGames];
 

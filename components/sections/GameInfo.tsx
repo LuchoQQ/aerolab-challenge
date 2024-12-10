@@ -19,7 +19,8 @@ const GameInfo: React.FC<Props> = ({ data }) => {
                 <h4 className="text-sm font-medium opacity-70">
                     {data?.platforms
                         ?.map((platform: Platform) => platform.name)
-                        .join(", ")}                </h4>
+                        .join(", ")}
+                </h4>
             </div>
         </>
     );

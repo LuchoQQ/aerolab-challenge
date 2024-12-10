@@ -1,68 +1,36 @@
-import React, { useState, useEffect, Fragment, useRef } from "react";
+"use client";
+
+import React, { useState, Fragment, useRef } from "react";
 import { Combobox, Transition } from "@headlessui/react";
-import axios from "axios";
 import Image from "next/image";
-import { Search } from "lucide-react";
+import { Search } from 'lucide-react';
 import { useRouter } from "next/navigation";
+import { useGameSearch } from "../hooks/useGameQueries";
 import default_games from "../lib/default_games.js";
+
 interface SearchItem {
     id: number;
     name: string;
     cover: { url: string };
 }
 
-// Default popular games to show when the input is opened
-const DEFAULT_GAMES = default_games;
-
 export function GameSearchBar() {
     const [searchTerm, setSearchTerm] = useState("");
-    const [results, setResults] = useState<SearchItem[]>(DEFAULT_GAMES);
-    const [isLoading, setIsLoading] = useState(false);
-
     const inputRef = useRef<HTMLInputElement>(null);
-
     const router = useRouter();
 
-    useEffect(() => {
-        // If no search term, use default games
-        if (searchTerm.length === 0) {
-            setResults(DEFAULT_GAMES);
-        }
-    }, [searchTerm]);
-
-    const fetchResults = async () => {
-        if (searchTerm.length > 2) {
-            setIsLoading(true);
-            axios
-                .post("/api/games", { name: searchTerm })
-                .then((res) => {
-                    setResults(res.data);
-                })
-                .catch((error) => {
-                    console.error("Error fetching games:", error);
-                    setResults([]);
-                })
-                .finally(() => {
-                    setIsLoading(false);
-                });
-        }
-    };
-
-    useEffect(() => {
-        const timerId = setTimeout(fetchResults, 500);
-        return () => clearTimeout(timerId);
-    }, [searchTerm]);
+    const { data: results = default_games, isLoading } = useGameSearch(searchTerm);
 
     return (
         <div className="w-72">
             <Combobox>
                 <div className="relative">
-                    <div className="flex items-center relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left sm:text-sm">
-                        <Search className="text-black" />
+                    <div className="flex items-center relative w-full cursor-default overflow-hidden rounded-lg  text-left sm:text-sm">
+                        <Search className="text-[#F6BFE5] opacity-80" />
                         <Combobox.Button className="absolute inset-0 w-full h-full" />
                         <Combobox.Input
                             ref={inputRef}
-                            className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 outline-none focus:outline-none focus:ring-0"
+                            className="w-full border-none py-2 pl-3 pr-10 text-[#ce97bd] text-secondary leading-5 outline-none focus:outline-none focus:ring-0 placeholder-[#ce97bd] font-medium "
                             displayValue={(item: SearchItem) =>
                                 item ? item.name : ""
                             }

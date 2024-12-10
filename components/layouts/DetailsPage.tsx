@@ -1,82 +1,34 @@
 "use client";
 
-import React, { Suspense, useEffect, useState } from "react";
-import { Calendar, PuzzleIcon, Star } from "lucide-react";
+import React from "react";
+import { Calendar, PuzzleIcon, Star } from 'lucide-react';
 import { Toaster } from "react-hot-toast";
 
-
-import Game, { Genre } from "@/interfaces/Game";
+import { Genre } from "@/interfaces/Game";
 import TagInfo from "@/components/TagInfo";
 import SimilarGames from "@/components/sections/SimilarGames";
 import MediaSection from "@/components/sections/MediaSection";
 import DetailsHeader from "@/components/sections/DetailsHeader";
-import { gameService } from "@/services/gameService";
 import { formatDate } from "@/lib/utils";
 import { Vortex } from "react-loader-spinner";
 import GameInfo from "../sections/GameInfo";
-
-const DEFAULT_GAME: Game = {
-    id: 1,
-    name: "default",
-    cover: { url: "" },
-    first_release_date: 0,
-    added: 0,
-    summary: "",
-    platforms: [],
-    rating: 0,
-    involved_companies: [],
-    screenshots: [],
-    genres: [],
-    similar_games: [],
-    url: "",
-};
+import { useGameDetails, useSimilarGames } from '@/hooks/useGameQueries';
 
 type Props = {
     params: { slug: string };
 };
 
 const GameDetailsContent: React.FC<Props> = ({ params }) => {
-    const [data, setData] = useState(DEFAULT_GAME);
-    const [similarGames, setSimilarGames] = useState<Game[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const { data, isLoading: isLoadingGame } = useGameDetails(params.slug);
+    const { data: similarGames, isLoading: isLoadingSimilarGames } = useSimilarGames(params.slug);
 
-    useEffect(() => {
-        const fetchGameData = async () => {
-            if (!params.slug) return;
-
-            try {
-                setIsLoading(true);
-
-                const [gameData, similarGamesDetails] = await Promise.all([
-                    gameService.fetchGameDetails(params.slug),
-                    params.slug
-                        ? gameService.fetchSimilarGames(
-                              (
-                                  await gameService.fetchGameDetails(
-                                      params.slug
-                                  )
-                              ).similar_games || []
-                          )
-                        : Promise.resolve([]),
-                ]);
-
-                setData(gameData);
-                setSimilarGames(similarGamesDetails);
-            } catch (error) {
-                console.error("Error in game data fetching:", error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchGameData();
-    }, [params.slug]);
+    const isLoading = isLoadingGame || isLoadingSimilarGames;
 
     const getCarouselImages = () =>
-        data.screenshots?.map((image) => `https:${image.url}`) || [];
+        data?.screenshots?.map((image) => `https:${image.url}`) || [];
 
     const getGenreNames = () =>
-        data.genres?.map((genre: Genre) => genre.name).join(" & ") || "N/A";
+        data?.genres?.map((genre: Genre) => genre.name).join(" & ") || "N/A";
 
     if (isLoading) {
         return (
@@ -99,6 +51,10 @@ const GameDetailsContent: React.FC<Props> = ({ params }) => {
                 />
             </div>
         );
+    }
+
+    if (!data) {
+        return <div>No game data found</div>;
     }
 
     return (
@@ -135,7 +91,7 @@ const GameDetailsContent: React.FC<Props> = ({ params }) => {
                 </div>
                 <div className="flex flex-col gap-4 mt-4">
                     <MediaSection carouselImages={getCarouselImages()} />
-                    <SimilarGames similarGames={similarGames} />
+                    <SimilarGames similarGames={similarGames || []} />
                 </div>
             </div>
         </div>
@@ -143,7 +99,7 @@ const GameDetailsContent: React.FC<Props> = ({ params }) => {
 };
 
 const DetailsPage: React.FC<Props> = (props) => (
-    <Suspense
+    <React.Suspense
         fallback={
             <Vortex
                 visible={true}
@@ -164,7 +120,7 @@ const DetailsPage: React.FC<Props> = (props) => (
         }
     >
         <GameDetailsContent {...props} />
-    </Suspense>
+    </React.Suspense>
 );
 
 export default DetailsPage;

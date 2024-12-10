@@ -30,10 +30,10 @@ const Header = () => {
                     ) : (
                         <Link href="/" className="block">
                             <div className="flex sm:justify-center justify-start gap-2 items-center">
-                                <div className="border-2 border-[#FF86D9] rounded-2xl p-1 shadow-sm shadow-[#FF86D9] bg-gradient-to-b from-white to-[|#ff86d988]">
+                                <div className="border-2 border-[#FF86D9] rounded-2xl p-1 shadow-sm shadow-[#FF86D9] bg-gradient-to-b from-white to-[#ff86d988]">
                                     <Swords className="w-8 h-8 text-primary" />
                                 </div>
-                                <h2 className="font-bold text-2xl text-primary">
+                                <h2 className="font-bold text-2xl text-primary font-sans">
                                     Gaming Haven Z
                                 </h2>
                             </div>
@@ -41,7 +41,7 @@ const Header = () => {
                     )}
 
                     <div className="flex justify-center md:mr-auto md:ml-auto">
-                        <div className="flex items-center bg-white rounded-full shadow-lg px-4 py-2 mt-4 mt-4 max-w-[500px] w-full">
+                        <div className="flex items-center bg-white rounded-full shadow-lg px-4 py-2 mt-4 mt-4 max-w-[500px] w-full border-[#F6ADDF] border-2">
                             <GameSearchBar />
                         </div>
                     </div>
