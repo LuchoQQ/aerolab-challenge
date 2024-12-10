@@ -58,9 +58,10 @@ PASOS
         2. Imagenes poseen fallbacks
         3. Imagenes optimizadas con el componente de Next.js
     3. Gestion de datos y API:
-        1. Uso de zustand para los estados globales
-        2. Utilización de almacenamiento local para salvar la colección al cerrar la página
-        3. Uso eficiente de la API al limitar la cantidad de consultas y traer unicamente datos necesarios.
+        1. Utilización de la libreria React-Query para gestionar y sincronizar el estado de los datos de la aplicación y su almacenamiento local, a la vez que optimizando su carga y reduciendo errores. 
+        2. Uso de zustand para los estados globales
+        3. Utilización de almacenamiento local para salvar la colección al cerrar la página
+        4. Uso eficiente de la API al limitar la cantidad de consultas y traer unicamente datos necesarios.
     4. Performance
         1. Lazy loading entre páginas
         2. Metricas de carga LCP y FCP por encima de los 95 puntos
