@@ -12,7 +12,6 @@ type Props = {
 const CollectedGamed: React.FC<Props> = ({ filteredGames }) => {
     const { removeGame } = useGameStore();
 
-    // cards anim variantes
     const cardsContainerVariants = {
         hidden: { opacity: 0, y: 50 },
         visible: {

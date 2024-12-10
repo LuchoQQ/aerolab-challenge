@@ -45,10 +45,6 @@ export const gameService = {
 
     async searchGames(searchTerm: string): Promise<Game[]> {
         try {
-            if (searchTerm.length <= 2) {
-                return [];
-            }
-
             const res = await axios.post<Game[]>("/api/games", { name: searchTerm });
             return res.data;
         } catch (error) {

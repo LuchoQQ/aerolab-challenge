@@ -3,10 +3,11 @@
 import React, { useState, Fragment, useRef } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import Image from "next/image";
-import { Search } from 'lucide-react';
+import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useGameSearch } from "../hooks/useGameQueries";
 import default_games from "../lib/default_games.js";
+import _ from "lodash";
 
 interface SearchItem {
     id: number;
@@ -19,24 +20,34 @@ export function GameSearchBar() {
     const inputRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
 
-    const { data: results = default_games, isLoading } = useGameSearch(searchTerm);
+    console.log(searchTerm)
+
+    const { data: results = default_games, isLoading } =
+        useGameSearch(searchTerm);
+
+    const debouncedHandleChange = _.debounce((value: string) => {
+        setSearchTerm(value);
+    }, 1000);
+
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value;
+        debouncedHandleChange(value);
+    };
 
     return (
         <div className="w-72">
             <Combobox>
                 <div className="relative">
-                    <div className="flex items-center relative w-full cursor-default overflow-hidden rounded-lg  text-left sm:text-sm">
+                    <div className="flex items-center relative w-full cursor-default overflow-hidden rounded-lg text-left sm:text-sm">
                         <Search className="text-[#F6BFE5] opacity-80" />
                         <Combobox.Button className="absolute inset-0 w-full h-full" />
                         <Combobox.Input
                             ref={inputRef}
-                            className="w-full border-none py-2 pl-3 pr-10 text-[#ce97bd] text-secondary leading-5 outline-none focus:outline-none focus:ring-0 placeholder-[#ce97bd] font-medium "
+                            className="w-full border-none py-2 pl-3 pr-10 text-[#ce97bd] text-secondary leading-5 outline-none focus:outline-none focus:ring-0 placeholder-[#ce97bd] font-medium"
                             displayValue={(item: SearchItem) =>
                                 item ? item.name : ""
                             }
-                            onChange={(event) => {
-                                setSearchTerm(event.target.value);
-                            }}
+                            onChange={handleSearchChange}
                             placeholder="Search games..."
                         />
                     </div>
@@ -79,7 +90,7 @@ export function GameSearchBar() {
                                             router.push(`/details/${game.id}`)
                                         }
                                     >
-                                        {({}) => (
+                                        {() => (
                                             <div className="flex items-center">
                                                 {game.cover &&
                                                 game.cover.url ? (
