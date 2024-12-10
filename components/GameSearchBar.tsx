@@ -20,8 +20,6 @@ export default function GameSearchBar() {
     const inputRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
 
-    console.log(searchTerm)
-
     const { data: results = default_games, isLoading } =
         useGameSearch(searchTerm);
 

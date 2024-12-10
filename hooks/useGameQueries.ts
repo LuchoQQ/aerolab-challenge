@@ -5,7 +5,7 @@ import Game from '@/interfaces/Game.js';
 
 const typedDefaultGames: Game[] = default_games as unknown as Game[];
 
-export function useGameDetails(slug: string) {
+export function useGameDetails(slug: number) {
     return useQuery({
         queryKey: ['gameDetails', slug],
         queryFn: () => gameService.fetchGameDetails(slug),
@@ -13,7 +13,7 @@ export function useGameDetails(slug: string) {
     })
 }
 
-export function useSimilarGames(slug: string) {
+export function useSimilarGames(slug: number) {
     return useQuery({
         queryKey: ['similarGames', slug],
         queryFn: () => gameService.fetchSimilarGames(slug),

@@ -10,7 +10,6 @@ type Props = {
 
 const Card: React.FC<Props> = ({ game, removeGame }) => {
     const url = game?.cover?.url?.replace("thumb", "cover_big");
-
     return (
         <div className="relative">
             {url && (

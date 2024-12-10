@@ -1,24 +1,26 @@
 "use client";
 
-import React from "react";
-import { Calendar, PuzzleIcon, Star } from "lucide-react";
-import { Vortex } from "react-loader-spinner";
+import React, { useEffect } from "react";
+import { Calendar, PuzzleIcon, Star } from 'lucide-react';
 import { Toaster } from "react-hot-toast";
 
-import { Genre } from "@/interfaces/Game";
 import TagInfo from "@/components/TagInfo";
 import SimilarGames from "@/components/sections/SimilarGames";
 import MediaSection from "@/components/sections/MediaSection";
 import DetailsHeader from "@/components/sections/DetailsHeader";
-import GameInfo from "@/components/sections/GameInfo";
 import { formatDate } from "@/lib/utils";
-import { useGameDetails, useSimilarGames } from "@/hooks/useGameQueries";
+import { Vortex } from "react-loader-spinner";
+import GameInfo from "../sections/GameInfo";
+import { useGameDetails, useSimilarGames } from '@/hooks/useGameQueries';
+import { Genre } from "@/interfaces/Game";
+import useGameStore from "@/stores/gameStore";
 
 type Props = {
-    params: { slug: string };
+    params: { slug: number };
 };
 
 const GameDetailsContent: React.FC<Props> = ({ params }) => {
+    const { collectedGames, initializeStore, addGame } = useGameStore();
     const { data, isLoading: isLoadingGame } = useGameDetails(params.slug);
     const { data: similarGames, isLoading: isLoadingSimilarGames } = useSimilarGames(params.slug);
 
@@ -30,18 +32,20 @@ const GameDetailsContent: React.FC<Props> = ({ params }) => {
     const getGenreNames = () =>
         data?.genres?.map((genre: Genre) => genre.name).join(" & ") || "N/A";
 
-    // Spinner con espacio reservado para evitar CLS
+
+    useEffect(() => {
+        initializeStore();
+    }, [initializeStore]);
+
     if (isLoading) {
         return (
-            <div
-                className="flex justify-center items-center"
-                style={{ minHeight: "calc(100vh - 160px)" }} // Espacio fijo para evitar CLS
-            >
+            <div className="flex justify-center items-center mt-40">
                 <Vortex
                     visible={true}
-                    height={80}
-                    width={80}
+                    height="80"
+                    width="80"
                     ariaLabel="vortex-loading"
+                    wrapperStyle={{}}
                     wrapperClass="vortex-wrapper"
                     colors={[
                         "#FF00AE",
@@ -56,34 +60,30 @@ const GameDetailsContent: React.FC<Props> = ({ params }) => {
         );
     }
 
-    // Sin datos
     if (!data) {
-        return <div className="text-center">No game data found</div>;
+        return <div>No game data found</div>;
     }
 
     return (
         <div>
-            {/* Toaster con posición fija */}
-            <Toaster
-                position="top-right"
-                toastOptions={{
-                    duration: 5000,
-                    style: { zIndex: 9999 },
-                }}
-            />
-
-            {/* Contenido principal */}
-            <div className="px-4 max-w-screen-md w-full justify-self-center">
+            <div className="px-4  max-w-screen-md w-full justify-self-center">
                 <DetailsHeader
                     url={data.cover?.url?.replace("thumb", "cover_big") || ""}
                     data={data}
+                    collectedGames={collectedGames}
+                    addGame={addGame}
+                    id={params.slug}
                 />
+
+                <Toaster />
 
                 <div className="flex flex-wrap gap-3 mt-5">
                     <TagInfo
                         icon={Star}
                         label="Rating"
-                        value={data.rating ? (data.rating / 10).toFixed(1) : "N/A"}
+                        value={
+                            data.rating ? (data.rating / 10).toFixed(1) : "N/A"
+                        }
                     />
                     <TagInfo
                         icon={Calendar}
@@ -96,11 +96,9 @@ const GameDetailsContent: React.FC<Props> = ({ params }) => {
                         value={`${getGenreNames().slice(0, 40)}...`}
                     />
                 </div>
-
                 <div className="flex flex-col gap-4 mt-6">
                     <GameInfo data={data} />
                 </div>
-
                 <div className="flex flex-col gap-4 mt-4">
                     <MediaSection carouselImages={getCarouselImages()} />
                     <SimilarGames similarGames={similarGames || []} />
@@ -113,26 +111,22 @@ const GameDetailsContent: React.FC<Props> = ({ params }) => {
 const DetailsPage: React.FC<Props> = (props) => (
     <React.Suspense
         fallback={
-            <div
-                className="flex justify-center items-center"
-                style={{ minHeight: "calc(100vh - 160px)" }} // Espacio reservado
-            >
-                <Vortex
-                    visible={true}
-                    height={80}
-                    width={80}
-                    ariaLabel="vortex-loading"
-                    wrapperClass="vortex-wrapper"
-                    colors={[
-                        "#FF00AE",
-                        "#3c1661",
-                        "#D23F63",
-                        "#67c076",
-                        "orange",
-                        "#3C1661",
-                    ]}
-                />
-            </div>
+            <Vortex
+                visible={true}
+                height="80"
+                width="80"
+                ariaLabel="vortex-loading"
+                wrapperStyle={{}}
+                wrapperClass="vortex-wrapper"
+                colors={[
+                    "#FF00AE",
+                    "#3c1661",
+                    "#D23F63",
+                    "#67c076",
+                    "orange",
+                    "#3C1661",
+                ]}
+            />
         }
     >
         <GameDetailsContent {...props} />

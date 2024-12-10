@@ -18,14 +18,6 @@ export const metadata: Metadata = {
             "Base de datos de todos los videojuegos existentes. Se puede consultar juegos, leer descripción y agregar a tu propia colección",
         url: "https://aerolab-challenge-git-master-luchoqqs-projects.vercel.app/",
         siteName: "Gaming Haven Z",
-        images: [
-            {
-                url: "https://myawesomewebsite.com/og-image.jpg",
-                width: 1200, // This is the recommended size in pixels
-                height: 630,
-                alt: "My Awesome Website og-image",
-            },
-        ],
         locale: "en_US",
         type: "website",
     },

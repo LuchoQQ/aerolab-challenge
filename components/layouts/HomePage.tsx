@@ -8,7 +8,6 @@ import HomeButtons from "../sections/HomeButtons";
 const HomePage = () => {
     const { collectedGames } = useGameStore();
     const [filteredGames, setFilteredGames] = useState(collectedGames);
-
     return (
         <>
             <div className="px-2">

@@ -2,7 +2,7 @@ import axios from 'axios';
 import Game from '@/interfaces/Game';
 
 export const gameService = {
-    async fetchGameDetails(slug: string): Promise<Game> {
+    async fetchGameDetails(slug: number): Promise<Game> {
         try {
             const res = await axios.post(`/api/details/${slug}`);
             return res.data[0];
@@ -12,7 +12,7 @@ export const gameService = {
         }
     },
 
-    async fetchSimilarGames(slug: string): Promise<Game[]> {
+    async fetchSimilarGames(slug: number): Promise<Game[]> {
         try {
             // First, fetch the game details to get similar game IDs
             const gameData = await this.fetchGameDetails(slug);

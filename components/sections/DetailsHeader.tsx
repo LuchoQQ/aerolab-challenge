@@ -3,16 +3,22 @@ import { findCompany } from "@/lib/utils";
 import Image from "next/image";
 import React from "react";
 import CollectButton from "../CollectButton";
-import useGameStore from "@/stores/gameStore";
 
 type Props = {
     url: string;
     data: Game;
+    collectedGames: Game[];
+    addGame: (data: Game) => void;
+    id: number;
 };
 
-const DetailsHeader: React.FC<Props> = ({ url, data }) => {
-    const { addGame, collectedGames } = useGameStore();
-
+const DetailsHeader: React.FC<Props> = ({
+    url,
+    data,
+    collectedGames,
+    addGame,
+    id,
+}) => {
     const isGameCollected = collectedGames.some(
         (game: Game) => game.id === data.id
     );
@@ -25,7 +31,6 @@ const DetailsHeader: React.FC<Props> = ({ url, data }) => {
         data.involved_companies.length > 0
             ? findCompany(data.involved_companies)
             : null;
-
     return (
         <>
             <div className="flex gap-6 items-start">
@@ -35,6 +40,7 @@ const DetailsHeader: React.FC<Props> = ({ url, data }) => {
                             src={`https:${url}`}
                             alt="Portada juego"
                             fill
+                sizes="100%"
                             quality={100}
                             className="rounded-lg object-cover"
                         />
@@ -47,13 +53,16 @@ const DetailsHeader: React.FC<Props> = ({ url, data }) => {
                         {data?.name}
                     </h3>
                     <h3 className="text-primary font-semibold opacity-80">
-                    {involvedCompany ? involvedCompany.name : "No company involved"}
+                        {involvedCompany
+                            ? involvedCompany.name
+                            : "No company involved"}
                     </h3>
                     <div className="hidden md:block">
                         <CollectButton
                             isGameCollected={isGameCollected}
                             handleAddGame={handleAddGame}
                             data={data}
+                            id={id}
                         />
                     </div>
                 </div>
@@ -63,6 +72,7 @@ const DetailsHeader: React.FC<Props> = ({ url, data }) => {
                     isGameCollected={isGameCollected}
                     handleAddGame={handleAddGame}
                     data={data}
+                    id={id}
                 />
             </div>
         </>

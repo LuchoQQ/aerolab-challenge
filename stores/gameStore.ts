@@ -39,7 +39,7 @@ const useGameStore = create<GameStore>((set) => ({
         }
     },
     cleanStore: () => {
-        set((state) => {
+        set(() => {
             const games: Game[] = [];
             return {collectedGames: games}
         })

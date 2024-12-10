@@ -10,6 +10,7 @@ const HeroImage = () => {
                 src="/keys.webp" // Update with your actual hero image path
                 alt="Hero Background"
                 fill
+                sizes="100%"
                 priority
                 className="object-cover sm:object-contain bg-no-repeat absolute inset-0 z-10 object-left sm:object-top"
                 quality={90}
