@@ -7,19 +7,43 @@ import { Inter } from "next/font/google";
 export const metadata: Metadata = {
     title: "Gaming Haven Z",
     description:
-        "Base de datos de todos los videojuegos existentes. Se puede consultar juegos, leer descripción y agregar a tu propia colección",
+        "Database of all existing video games. You can consult games, read descriptions and add to your own collection.",
+    keywords: [
+        "nextjs",
+        "react",
+        "web development",
+        "videogames",
+        "database",
+        "collection",
+    ],
+    authors: [{ name: "Luciano Sanchez" }],
     icons: {
         icon: "/favicon.webp",
+        apple: "/favicon.webp"
     },
-
     openGraph: {
         title: "Gaming Haven Z",
         description:
-            "Base de datos de todos los videojuegos existentes. Se puede consultar juegos, leer descripción y agregar a tu propia colección",
-        url: "https://aerolab-challenge-git-master-luchoqqs-projects.vercel.app/",
+            "Database of all existing video games. You can consult games, read descriptions and add to your own collection.",
+        url: "https://aerolab-challenge-steel.vercel.app/",
         siteName: "Gaming Haven Z",
+        images: [
+            {
+                url: "/preview.webp",
+                width: 806,
+                height: 902,
+                alt: "Homepage",
+            },
+        ],
         locale: "en_US",
         type: "website",
+    },
+
+    twitter: {
+        card: "summary_large_image",
+        title: "Arma tu colección de videojuegos!",
+        description: "Database of all existing video games. You can consult games, read descriptions and add to your own collection.",
+        images: ["/preview.webp"],
     },
 
     robots: {

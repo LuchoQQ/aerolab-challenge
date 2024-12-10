@@ -139,7 +139,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                                                 width={220}
                                                 height={180}
                                                 quality={100}
-                                                className={`${styles.embla__slide__img} ${styles.embla__parallax__img}`}
+                                                className={`${styles.embla__slide__img} ${styles.embla__parallax__img} cursor-pointer`}
                                                 src={url ? url : '/fallback.webp'}
                                                 alt={`Slide ${index + 1}`}
                                             />
