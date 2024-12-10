@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import useGameStore from "@/stores/gameStore";
 import CollectedGamed from "../sections/CollectedGamed";
 import HomeButtons from "../sections/HomeButtons";
