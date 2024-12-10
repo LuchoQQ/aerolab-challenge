@@ -37,3 +37,31 @@ export const formatDate = (timestamp: number): string => {
 
     return `${day}/${month < 10 ? "0" + month : month}/${year}`;
 };
+
+export function createSlug(name: string | undefined | null, id: number): string {
+    // If name is undefined or null, use a default slug
+    if (!name) {
+        return `game-${id}`;
+    }
+
+    return `${name.toLowerCase()
+        .replace(/[^\w\s-]/g, '') // Remove special characters
+        .replace(/\s+/g, '-')     // Replace spaces with hyphens
+        .trim()}-${id}`;
+}
+export function normalizeImageUrl(url?: string): string {
+    if (!url) return '/fallback.webp';
+
+    // If the URL starts with //, prepend https:
+    if (url.startsWith('//')) {
+        return `https:${url}`;
+    }
+
+    // If the URL is already absolute, return it as is
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+        return url;
+    }
+
+    // If it's a relative path, you might want to handle it differently
+    return `/fallback.webp`;
+}

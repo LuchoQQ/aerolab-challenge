@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useGameSearch } from "../hooks/useGameQueries";
 import default_games from "../lib/default_games.js";
 import _ from "lodash";
+import { createSlug } from "@/lib/utils";
 
 interface SearchItem {
     id: number;
@@ -90,7 +91,7 @@ export default function GameSearchBar() {
                                         }
                                         value={game}
                                         onClick={() =>
-                                            router.push(`/details/${game.id}`)
+                                            router.push(`/details/${createSlug(game.name, game.id)}`)
                                         }
                                     >
                                         {() => (

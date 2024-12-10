@@ -16,16 +16,16 @@ import { Genre } from "@/interfaces/Game";
 import useGameStore from "@/stores/gameStore";
 
 type Props = {
-    params: { slug: number };
+    gameId: number;
 };
 
-const GameDetailsContent: React.FC<Props> = ({ params }) => {
+const DetailsPage: React.FC<Props> = ({ gameId }) => {
     // data store
     const { collectedGames, initializeStore, addGame } = useGameStore();
 
     // react query
-    const { data, isLoading: isLoadingGame } = useGameDetails(params.slug);
-    const { data: similarGames, isLoading: isLoadingSimilarGames } = useSimilarGames(params.slug);
+    const { data, isLoading: isLoadingGame } = useGameDetails(gameId);
+    const { data: similarGames, isLoading: isLoadingSimilarGames } = useSimilarGames(gameId);
    
     // inicializar data con el localstorage
     useEffect(() => {
@@ -77,7 +77,7 @@ const GameDetailsContent: React.FC<Props> = ({ params }) => {
                     data={data}
                     collectedGames={collectedGames}
                     addGame={addGame}
-                    id={params.slug}
+                    id={gameId}
                 />
 
                 <Toaster />
@@ -112,30 +112,5 @@ const GameDetailsContent: React.FC<Props> = ({ params }) => {
         </div>
     );
 };
-
-const DetailsPage: React.FC<Props> = (props) => (
-    <React.Suspense
-        fallback={
-            <Vortex
-                visible={true}
-                height="80"
-                width="80"
-                ariaLabel="vortex-loading"
-                wrapperStyle={{}}
-                wrapperClass="vortex-wrapper"
-                colors={[
-                    "#FF00AE",
-                    "#3c1661",
-                    "#D23F63",
-                    "#67c076",
-                    "orange",
-                    "#3C1661",
-                ]}
-            />
-        }
-    >
-        <GameDetailsContent {...props} />
-    </React.Suspense>
-);
 
 export default DetailsPage;

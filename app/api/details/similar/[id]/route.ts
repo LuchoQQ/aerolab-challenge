@@ -8,7 +8,7 @@ const BASE_URL = "https://api.igdb.com/v4/games"
 export async function POST(request: Request, { params }: { params: { id: string } }) {
     try {
         const response = await axios.post(BASE_URL,
-            `fields cover.url; where id = ${params.id};`,
+            `fields name,cover.url; where id = ${params.id};`,
             {
                 headers: {
                     'Client-ID': process.env.IGDB_CLIENT_ID,

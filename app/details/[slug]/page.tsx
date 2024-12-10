@@ -1,12 +1,25 @@
 import DetailsPage from "@/components/layouts/DetailsPage";
+import { notFound } from 'next/navigation';
 
 export default async function Page({
     params,
 }: {
-    params: Promise<{ slug: number }>;
+    params: { slug: string }; 
 }) {
-    // resolver los params
-    const resolvedParams = await params;
+    // Extract the ID from the last part of the slug
+    const idMatch = params.slug.match(/-(\d+)$/);
+    
+    if (!idMatch) {
+        // If no ID is found, use Next.js notFound function
+        notFound();
+    }
 
-    return <DetailsPage params={resolvedParams} />;
+    const gameId = parseInt(idMatch[1], 10);
+
+    if (isNaN(gameId)) {
+        // If parsing fails, use notFound
+        notFound();
+    }
+
+    return <DetailsPage gameId={gameId} />;
 }
