@@ -53,6 +53,7 @@ PASOS
     1. SEO y usabilidad
         1. Movilidad con teclado en Dialog de carrusel de imagenes (salir con X, moverse con flechas)
         2. Metadatos del proyecto
+        3. URLs amigables
     2. Optimizacion de imagenes
         1. Imagenes en formato .webp
         2. Imagenes poseen fallbacks
