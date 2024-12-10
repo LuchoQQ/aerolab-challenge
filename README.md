@@ -66,6 +66,7 @@ PASOS
     4. Performance
         1. Lazy loading entre páginas
         2. Metricas de carga LCP y FCP por encima de los 95 puntos
+        3. Reduccion de Layout Shifting
 
 TODO:
 
