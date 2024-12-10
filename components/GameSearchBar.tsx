@@ -66,9 +66,9 @@ export default function GameSearchBar() {
                                 <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
                                     Cargando...
                                 </div>
-                            ) : results.length === 0 && searchTerm !== "" ? (
+                            ) : results?.length === 0 && searchTerm !== "" ? (
                                 <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
-                                    {searchTerm.length > 2
+                                    {searchTerm?.length > 2
                                         ? "No hay resultados"
                                         : "Escribe para buscar"}
                                 </div>
@@ -100,7 +100,7 @@ export default function GameSearchBar() {
                                                         className="mr-2"
                                                     />
                                                 ) : null}
-                                                {game.name.length > 20
+                                                {game?.name?.length > 20
                                                     ? `${game.name.slice(
                                                           0,
                                                           20

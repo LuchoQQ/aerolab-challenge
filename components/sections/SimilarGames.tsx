@@ -27,7 +27,7 @@ const SimilarGames: React.FC<Props> = ({ similarGames }) => {
                         >
                             <div className="relative w-full aspect-[2/3]">
                                 <Image
-                                    src={imageUrl}
+                                    src={imageUrl ? imageUrl : '/fallback.webp'}
                                     alt={`${game.name} cover`}
                                     sizes="100%"
                                     fill

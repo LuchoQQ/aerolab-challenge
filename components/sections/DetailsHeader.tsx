@@ -28,7 +28,7 @@ const DetailsHeader: React.FC<Props> = ({
     };
 
     const involvedCompany: { name: string; id: number } | null =
-        data.involved_companies.length > 0
+        data?.involved_companies?.length > 0
             ? findCompany(data.involved_companies)
             : null;
     return (

@@ -98,7 +98,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
         setSelectedImageIndex(newIndex);
     };
 
-    const url = slides[selectedImageIndex].replace(
+    const url = slides[selectedImageIndex]?.replace(
         "thumb",
         "screenshot_huge"
     );
@@ -119,7 +119,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                 <div className={styles.embla__viewport} ref={emblaRef}>
                     <div className={styles.embla__container}>
                         {slides?.map((slide, index) => {
-                            const url = slide.replace(
+                            const url = slide?.replace(
                                 "thumb",
                                 "screenshot_big"
                             );
@@ -140,7 +140,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                                                 height={180}
                                                 quality={100}
                                                 className={`${styles.embla__slide__img} ${styles.embla__parallax__img}`}
-                                                src={url}
+                                                src={url ? url : '/fallback.webp'}
                                                 alt={`Slide ${index + 1}`}
                                             />
                                         </div>

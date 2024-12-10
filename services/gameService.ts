@@ -19,7 +19,7 @@ export const gameService = {
             const similarGameIds = gameData.similar_games?.slice(0, 6) || [];
 
             // If no similar games, return empty array
-            if (similarGameIds.length === 0) return [];
+            if (similarGameIds?.length === 0) return [];
 
             // Fetch details for similar games
             const similarGamesDetails = await Promise.all(
