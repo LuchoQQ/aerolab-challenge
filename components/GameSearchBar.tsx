@@ -38,7 +38,10 @@ export default function GameSearchBar() {
                 <div className="relative">
                     <div className="flex items-center relative w-full cursor-default overflow-hidden rounded-lg text-left sm:text-sm">
                         <Search className="text-[#F6BFE5] opacity-80" />
-                        <Combobox.Button className="absolute inset-0 w-full h-full" />
+                        <Combobox.Button
+                            className="absolute inset-0 w-full h-full"
+                            aria-label="Open game search dropdown"
+                        />
                         <Combobox.Input
                             ref={inputRef}
                             className="w-full border-none py-2 pl-3 pr-10 text-[#ce97bd] text-secondary leading-5 outline-none focus:outline-none focus:ring-0 placeholder-[#ce97bd] font-medium"
@@ -47,6 +50,8 @@ export default function GameSearchBar() {
                             }
                             onChange={handleSearchChange}
                             placeholder="Search games..."
+                            aria-label="Search games"
+                            aria-describedby="search-instructions"
                         />
                     </div>
                     <Transition
