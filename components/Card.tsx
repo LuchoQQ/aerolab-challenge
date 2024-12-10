@@ -32,7 +32,7 @@ const Card: React.FC<Props> = ({ game, removeGame }) => {
             <div className="absolute bottom-2 right-2">
                 <div
                     className="bg-white rounded-full p-2 cursor-pointer hover:bg-gray-200 transition-colors"
-                    onClick={(e) => {
+                    onClick={() => {
                         removeGame(game.id);
                     }}
                 >
